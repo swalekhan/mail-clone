@@ -1,0 +1,34 @@
+
+.single-email{
+    box-shadow: 0px 0px 3px #aaa;
+    height: 200%;
+}
+.sinle-email-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 5px;
+    border-bottom: 1px solid whitesmoke;
+}
+
+.single-email-left{
+    display: flex;
+    align-items: center;
+}
+.single-email-left svg{
+   font-size: 18px;
+}
+.single-email-right{
+    padding: 0px 10px;
+    display: flex;
+    align-items: center;
+}
+.single-email-right p{
+    font-size: 13px;
+}
+.single-email-text{
+    display: flex;
+    padding: 10px;
+}
+/* .single-email-text p{
+    display: inline;
+} */

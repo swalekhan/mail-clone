@@ -1,0 +1,121 @@
+
+
+.email-list{
+    display: flex;
+    flex-direction: column;
+}
+.emali-setting{
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0%;
+    border-bottom: 1px solid whitesmoke;
+}
+.emali-setting svg{
+    font-size: 18px;
+}
+.email-setting-right{
+    display: flex;
+    align-items: center;
+}
+.email-setting-right p{
+    font-size: 13px;
+}
+/* inside link design */
+.email-list a{
+    color: rgb(58, 55, 55);
+    text-decoration: none;
+}
+/* ..................emailbody....... */
+.email-body{
+    padding: 0px 20px;
+    display: flex;
+   border-bottom: 1px solid whitesmoke;
+   height: 45px;
+}
+.email-body:hover{
+    box-shadow: 2px 2px 4px whitesmoke;
+    cursor: pointer;
+}
+
+.link{
+   flex: 0.78;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.email-body-midle{
+    flex: 0.7;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.email-body-left{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.email-body-left span{
+    margin-right: 30px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgb(200, 7, 7);
+}
+.email-body-midle p{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 500px;
+     font-size: 15px;
+}
+
+.email-body-right{
+    flex: 0.18;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.email-body-right button{
+    padding: 2px 5px;
+    border: none;
+    background-color: rgb(212, 13, 13);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.email-body-right button:hover{
+    background-color: rgb(192, 11, 11);
+}
+
+
+
+/* .email-body-left{
+
+} */
+/* .email-body-left{
+    display: flex;
+    align-items: center;
+    min-width: 300px;
+    flex: 20%;
+}
+.
+
+.email-body-midle{
+    display: flex;
+    align-items: center;
+    flex:70%;
+} */
+/* */
+/* .email-body-right{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 18%;
+}
+.email-body-right p{
+    font-size: 13px;
+    color: rgb(67, 66, 66);
+} */
+

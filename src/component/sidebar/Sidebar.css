@@ -1,0 +1,18 @@
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+}
+.compose-btn{
+    border-radius: 40px;
+    box-shadow: 2px 2px 3px #aaa;
+    padding: 10px 20px;
+    margin:20px 10px !important;
+    max-width: 150px;
+    border: none;
+    font-size: large;
+}
+.compose-btn span{
+   font-size: large;
+   padding: 0px 2px;
+}
