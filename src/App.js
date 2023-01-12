@@ -7,26 +7,30 @@ import Header from './component/layout/Hedaer';
 import EmailList from './component/mail/EmailList';
 import SingleEmail from './component/mail/sindleEmail/SingleEmail';
 import Sidebar from './component/sidebar/Sidebar';
-import { putMail } from './Store/mailSlice';
+// import { putMail } from './Store/mailSlice';
 import { fetchMail } from './Store/mailSlice';
 import { Switch, Route } from 'react-router-dom';
+import { fetchSendMail } from './Store/SendMailSlice';
 
-let preventPut = true;
+// let preventPut = true;
 function App() {
   const dispatch = useDispatch()
   const compose = useSelector(state => state.compose.compose);
-  const mailState = useSelector(state=> state.mail.mailState)
-
+  // const mailState = useSelector(state=> state.mail.mailState)
   // .................putMail data.................
-  useEffect(()=>{
-    if(preventPut){
-      preventPut = false;
-      return;
-    }
-     dispatch(putMail("email",mailState))
-  },[mailState, dispatch])
+  // useEffect(()=>{
+  //   if(preventPut){
+  //     preventPut = false;
+  //     return;
+  //   }
+  //    dispatch(putMail("email",mailState))
+  // },[mailState, dispatch])
 
   // ...........................fetch...................
+  useEffect(()=>{
+    dispatch(fetchSendMail("swale"))
+    },[dispatch])
+
   useEffect(()=>{
   dispatch(fetchMail("email"))
   console.log("fectch app")

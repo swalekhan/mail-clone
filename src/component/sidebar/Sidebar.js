@@ -11,6 +11,7 @@ const Sidebar = () =>{
       const dispatch = useDispatch()
       const mail = useSelector(state=> state.mail.mailState)
       const unreadMail = mail.filter((e)=> e.isRead === false);
+      
     return (
         <div className="sidebar">
          <button className='compose-btn' onClick={()=>dispatch(composeActions.showCompose())}><span>+</span>Compose</button>

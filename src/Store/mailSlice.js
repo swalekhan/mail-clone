@@ -9,12 +9,12 @@ const mailSlice = createSlice({
             // const unreadMail = state.mailState.filter((e) => e.isRead === false);
             // state.totalUnreadMail = unreadMail.length;
         },
-        addMail(state, action) {
-            state.mailState = [...state.mailState, action.payload];
+        // addMail(state, action) {
+        //     state.mailState = [...state.mailState, action.payload];
 
-            // const unreadMail = state.mailState.filter((e) => e.isRead === false);
-            // state.totalUnreadMail = unreadMail.length;
-        },
+        //     // const unreadMail = state.mailState.filter((e) => e.isRead === false);
+        //     // state.totalUnreadMail = unreadMail.length;
+        // },
         isReadHandler(state, action) {
             const existItemIndex = state.mailState.find((e) => e.id === action.payload)
             if(existItemIndex){
@@ -50,19 +50,29 @@ export const putMail = (email, mail) => {
 }
 
 export const fetchMail = (email) => {
-    // console.log(email)
     return async (dispatch) => {
         console.log("datafetch")
         const fetchData = async () => {
             const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}.json`);
             const data = await response.json();
-            
-            return data;
+            const arr = []
+            for (let key in data) {
+                arr.push({
+                    _id: key,
+                    text: data[key].text,
+                    to: data[key].to,
+                    subject: data[key].subject,
+                    isRead: data[key].isRead,
+                    id: data[key].id
+                })
+            }
+            console.log("mail", arr)
+            return arr;
         }
 
         try {
             const data = await fetchData()
-            dispatch(mailActions.replaceMail(data.mail))
+            dispatch(mailActions.replaceMail(data))
         } catch (err) {
             console.log(err)
         }
