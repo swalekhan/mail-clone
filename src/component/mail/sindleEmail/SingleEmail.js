@@ -9,11 +9,14 @@ import { useSelector } from "react-redux";
 
 
 const SingleEmail = () => {
+  const SIBtn = useSelector(state => state.SIBtn.SIBtnState)
   const mailState = useSelector(state=> state.mail.mailState)
+  const sendState = useSelector(state => state.send.sendState)
   const paras = useParams()
  
-  const findMail = mailState.find((e)=> e.id === +paras.id)
-
+  const mails = SIBtn?sendState:mailState;
+  const findMail = mails.find((e)=> e.id === +paras.id)
+   console.log(paras)
   return (
     <div className="single-email">
       <EmailSetting />

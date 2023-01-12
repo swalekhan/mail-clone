@@ -6,6 +6,7 @@ const mailSlice = createSlice({
     reducers: {
         replaceMail(state, action) {
             state.mailState = action.payload ? action.payload : [];
+            console.log("mail")
             // const unreadMail = state.mailState.filter((e) => e.isRead === false);
             // state.totalUnreadMail = unreadMail.length;
         },
@@ -29,25 +30,25 @@ const mailSlice = createSlice({
 
 export const mailActions = mailSlice.actions;
 
-export const putMail = (email, mail) => {
-    return async (dispatch) => {
-        const putdata = async () => {
-            const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}.json`, {
-                method: "PUT",
-                body: JSON.stringify({
-                    mail: mail,
-                }),
-            })
-            const data = await response.json()
-            console.log("data", data)
-        }
-        try {
-            putdata();
-        } catch (err) {
-            console.log(err)
-        }
-    }
-}
+// export const putMail = (email, mail) => {
+//     return async (dispatch) => {
+//         const putdata = async () => {
+//             const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}.json`, {
+//                 method: "PUT",
+//                 body: JSON.stringify({
+//                     mail: mail,
+//                 }),
+//             })
+//             const data = await response.json()
+//             console.log("data", data)
+//         }
+//         try {
+//             putdata();
+//         } catch (err) {
+//             console.log(err)
+//         }
+//     }
+// }
 
 export const fetchMail = (email) => {
     return async (dispatch) => {
@@ -63,16 +64,18 @@ export const fetchMail = (email) => {
                     to: data[key].to,
                     subject: data[key].subject,
                     isRead: data[key].isRead,
-                    id: data[key].id
+                    id: data[key].id,
+                    date:data[key].date
                 })
             }
             console.log("mail", arr)
             return arr;
         }
-
         try {
-            const data = await fetchData()
-            dispatch(mailActions.replaceMail(data))
+            setInterval( async()=>{
+                const data = await fetchData()
+                dispatch(mailActions.replaceMail(data))
+            },5000)  
         } catch (err) {
             console.log(err)
         }

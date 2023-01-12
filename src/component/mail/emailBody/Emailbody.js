@@ -4,12 +4,16 @@ import { Link } from 'react-router-dom';
 import { mailActions } from '../../../Store/mailSlice';
 import './emailBody.css'
 
-const EmailBody = ({ to, subject, isRead, id, text,_id }) => {
+const EmailBody = ({ to, subject, isRead, id, text,_id , date}) => {
   const dispatch = useDispatch()
   const SIBtn = useSelector((state=> state.SIBtn.SIBtnState))
-
+   const time = new Date(date).getDay()
+   const time2 = time+"/"+new Date(date).getMonth()
+   const time3 = time2+"/"+new Date(date).getFullYear()
+  //  const time4 =new Date(date).getMinutes()
+  // console.log(,"date",id)
+  // ................delete inbox email..........................
   const deleteMail = async () => {
-     
     const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/email/${_id}.json`,{
       method:"DELETE",
     })
@@ -19,7 +23,7 @@ const EmailBody = ({ to, subject, isRead, id, text,_id }) => {
   }
 
 
-
+// ......................updatedEmail.. ureadEmailHandler............................
   const clickHandler = async() => {
     // ..........................only when isRead === false.............................
     if(isRead=== false){     
@@ -54,7 +58,7 @@ const EmailBody = ({ to, subject, isRead, id, text,_id }) => {
       </Link>
       <div className='email-body-right'>
        {!SIBtn && <button onClick={deleteMail} >delete</button>}
-        <p>02:39PM</p>
+        <p>{time3}</p>
       </div>
     </div>
   )

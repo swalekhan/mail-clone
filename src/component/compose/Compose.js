@@ -5,7 +5,6 @@ import { useRef, useState } from 'react';
 import { useDispatch} from 'react-redux';
 import { composeActions } from '../../Store/composeSlice';
 import { sendMailAction } from '../../Store/SendMailSlice';
-// import { mailActions } from '../../Store/mailSlice';
 
 const Compose = () => {
     const dispatch = useDispatch()
@@ -18,14 +17,17 @@ const Compose = () => {
         setEditor(e.blocks[0].text)
     }
 
+    // .............................sendemail.......................
     const submitHandler = async (e) => {
         e.preventDefault()
+        // .............along with state change
         dispatch(sendMailAction.addSendMail({
             to: receiverRef.current.value,
             subject: subjectRef.current.value,
             text: editor,
             isRead: false,
             id: Math.random()+10,
+            date:new Date().getMilliseconds(),
         }))
 
         const  response = await fetch("https://email-box-a1f52-default-rtdb.firebaseio.com/email.json",{
@@ -36,6 +38,7 @@ const Compose = () => {
                 text: editor,
                 isRead: false,
                 id: Math.random()+10,
+                date:new Date().getMilliseconds(),
             }),
             Headers:{
                 "Content-Type":"application/json",
@@ -43,9 +46,8 @@ const Compose = () => {
         })
         const data = await response.json()
         console.log(data)
-
-
     }
+
     return (
         <div className="compose-outer-div">
             <div className="compose-inner-div">
