@@ -1,10 +1,9 @@
 
-import { useDispatch } from 'react-redux'
+import { useDispatch} from 'react-redux'
 import { SIBtnActions } from '../../Store/send-inbox-btnSlice'
 import './SidebarOption.css'
 
-const SidebarOption = ({ Icon, title, number, isActive }) => {
-
+const SidebarOption = ({ Icon, title, number }) => {
       const dispatch = useDispatch()
      
 
@@ -22,7 +21,7 @@ const SidebarOption = ({ Icon, title, number, isActive }) => {
 
 
     return (
-        <div className={`sidebar-option ${isActive && "sidebar-option-active"}`} onClick={sendMailHandler}>
+        <div className={`sidebar-option`} onClick={sendMailHandler}>
             <Icon />
             <h4>{title}</h4>
             <p>{number}</p>

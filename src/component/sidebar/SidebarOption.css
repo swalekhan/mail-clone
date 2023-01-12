@@ -23,12 +23,12 @@
     font-weight: normal; 
 }
 .sidebar-option p{
-    opacity: 0;
-    color: rgb(93, 91, 91);
+    opacity: 1;
+    color: rgb(235, 6, 6);
     font-size: 12px;
 }
 
-.sidebar-option-active{
+/* .sidebar-option-active{
     background-color: rgb(235, 232, 232);
 }
 .sidebar-option-active h4,
@@ -36,4 +36,4 @@
     color: rgb(235, 9, 9);
     font-size: bold;
     opacity: 1 !important;
-}
+} */

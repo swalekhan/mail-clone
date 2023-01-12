@@ -1,19 +1,28 @@
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { mailActions } from '../../../Store/mailSlice';
 import './emailBody.css'
 
-const EmailBody = ({ to, subject, isRead, id, text,_id,inbox }) => {
+const EmailBody = ({ to, subject, isRead, id, text,_id }) => {
   const dispatch = useDispatch()
+  const SIBtn = useSelector((state=> state.SIBtn.SIBtnState))
 
-  const deleteMail = () => {
+  const deleteMail = async () => {
+     
+    const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/email/${_id}.json`,{
+      method:"DELETE",
+    })
+    const data = await response.json();
+    console.log("delete",data)
     dispatch(mailActions.deleteMail(id))
   }
 
+
+
   const clickHandler = async() => {
-     
-    if(isRead=== false){
+    // ..........................only when isRead === false.............................
+    if(isRead=== false){     
     const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/email/${_id}.json`,{
       method:"PUT",
       body:JSON.stringify({
@@ -27,9 +36,9 @@ const EmailBody = ({ to, subject, isRead, id, text,_id,inbox }) => {
     const data = await response.json()
     console.log("putdata bodyemali",data);
     dispatch(mailActions.isReadHandler(id))
-    console.log("email b ody click")
   }
   }
+
 
   return (
     <div className='email-body' onClick={clickHandler}>
@@ -44,7 +53,7 @@ const EmailBody = ({ to, subject, isRead, id, text,_id,inbox }) => {
         </div>
       </Link>
       <div className='email-body-right'>
-        <button onClick={deleteMail} >delete</button>
+       {!SIBtn && <button onClick={deleteMail} >delete</button>}
         <p>02:39PM</p>
       </div>
     </div>
