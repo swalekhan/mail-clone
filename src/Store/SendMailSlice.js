@@ -29,7 +29,8 @@ export const fetchSendMail = (email) => {
                     to: data[key].to,
                     subject: data[key].subject,
                     isRead: data[key].isRead,
-                    id: data[key].id
+                    id: data[key].id,
+                    date:data[key].date,
                 })
             }
             console.log("senddata", arr)

@@ -72,10 +72,10 @@ export const fetchMail = (email) => {
             return arr;
         }
         try {
-            setInterval( async()=>{
+            // setInterval( async()=>{
                 const data = await fetchData()
                 dispatch(mailActions.replaceMail(data))
-            },5000)  
+            // },5000)  
         } catch (err) {
             console.log(err)
         }

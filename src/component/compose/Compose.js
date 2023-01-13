@@ -2,13 +2,14 @@ import './Compose.css'
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useRef, useState } from 'react';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { composeActions } from '../../Store/composeSlice';
 import { sendMailAction } from '../../Store/SendMailSlice';
 
 const Compose = () => {
     const dispatch = useDispatch()
- 
+    const email = useSelector(state => state.token.email)
+
     const [editor, setEditor] = useState("")
     const subjectRef = useRef();
     const receiverRef = useRef()
@@ -30,7 +31,7 @@ const Compose = () => {
             date:new Date().getMilliseconds(),
         }))
 
-        const  response = await fetch("https://email-box-a1f52-default-rtdb.firebaseio.com/email.json",{
+        const  response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}send.json`,{
             method:"POST",
             body:JSON.stringify({
                 to: receiverRef.current.value,
@@ -45,7 +46,26 @@ const Compose = () => {
             },
         })
         const data = await response.json()
-        console.log(data)
+        console.log("inbox data",data)
+
+// .................................inbox................................
+        const emailTo = receiverRef.current.value.replace(/[^0-9a-z]/gi)
+        const  res = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${emailTo}.json`,{
+            method:"POST",
+            body:JSON.stringify({
+                to: receiverRef.current.value,
+                subject: subjectRef.current.value,
+                text: editor,
+                isRead: false,
+                id: Math.random()+10,
+                date:new Date().getMilliseconds(),
+            }),
+            Headers:{
+                "Content-Type":"application/json",
+            },
+        })
+        const resData = await res.json()
+        console.log(resData)
     }
 
     return (

@@ -7,6 +7,7 @@ import './emailBody.css'
 const EmailBody = ({ to, subject, isRead, id, text,_id , date}) => {
   const dispatch = useDispatch()
   const SIBtn = useSelector((state=> state.SIBtn.SIBtnState))
+  const email = useSelector(state => state.token.email)
    const time = new Date(date).getDay()
    const time2 = time+"/"+new Date(date).getMonth()
    const time3 = time2+"/"+new Date(date).getFullYear()
@@ -14,11 +15,12 @@ const EmailBody = ({ to, subject, isRead, id, text,_id , date}) => {
   // console.log(,"date",id)
   // ................delete inbox email..........................
   const deleteMail = async () => {
-    const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/email/${_id}.json`,{
+    const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}/${_id}.json`,{
       method:"DELETE",
     })
     const data = await response.json();
     console.log("delete",data)
+    ///............along with from state......
     dispatch(mailActions.deleteMail(id))
   }
 
@@ -27,7 +29,7 @@ const EmailBody = ({ to, subject, isRead, id, text,_id , date}) => {
   const clickHandler = async() => {
     // ..........................only when isRead === false.............................
     if(isRead=== false){     
-    const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/email/${_id}.json`,{
+    const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}/${_id}.json`,{
       method:"PUT",
       body:JSON.stringify({
         to,
@@ -35,6 +37,7 @@ const EmailBody = ({ to, subject, isRead, id, text,_id , date}) => {
         isRead:true,
         id,
         text,
+        date,
       })
     })
     const data = await response.json()
@@ -46,7 +49,7 @@ const EmailBody = ({ to, subject, isRead, id, text,_id , date}) => {
 
   return (
     <div className='email-body' onClick={clickHandler}>
-      <Link className='link' to={`SingleMail/${id}`}>
+      <Link className='link' to={`Home/${id}`}>
 
         <div className='email-body-left'>
           {!isRead && <span></span>}
