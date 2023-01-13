@@ -1,6 +1,7 @@
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import useHttps from '../../../hooks/use-http';
 import { mailActions } from '../../../Store/mailSlice';
 import './emailBody.css'
 
@@ -8,19 +9,25 @@ const EmailBody = ({ to, subject, isRead, id, text,_id , date}) => {
   const dispatch = useDispatch()
   const SIBtn = useSelector((state=> state.SIBtn.SIBtnState))
   const email = useSelector(state => state.token.email)
+
+  const {deleteRequest} = useHttps()
+
    const time = new Date(date).getDay()
    const time2 = time+"/"+new Date(date).getMonth()
    const time3 = time2+"/"+new Date(date).getFullYear()
   //  const time4 =new Date(date).getMinutes()
   // console.log(,"date",id)
+
+
   // ................delete inbox email..........................
   const deleteMail = async () => {
-    const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}/${_id}.json`,{
-      method:"DELETE",
-    })
-    const data = await response.json();
-    console.log("delete",data)
-    ///............along with from state......
+ 
+       const obj = {
+        url:`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}/${_id}.json`,
+        method:"DELETE",
+       }
+      deleteRequest(obj)
+//  ........along with from state......
     dispatch(mailActions.deleteMail(id))
   }
 
@@ -48,8 +55,10 @@ const EmailBody = ({ to, subject, isRead, id, text,_id , date}) => {
 
 
   return (
-    <div className='email-body' onClick={clickHandler}>
-      <Link className='link' to={`Home/${id}`}>
+    //  ............onClick on div...............when we click on it then red dot remove.
+    <div className='email-body' onClick={clickHandler}>  
+      {/* ............ link ........... */}
+      <Link className='link' to={`Home/${id}`}>   
 
         <div className='email-body-left'>
           {!isRead && <span></span>}
