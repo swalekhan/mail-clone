@@ -3,10 +3,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import Compose from './component/compose/Compose';
-// import Header from './component/layout/Hedaer';
-// import EmailList from './component/mail/EmailList';
-// import SingleEmail from './component/mail/sindleEmail/SingleEmail';
-// import Sidebar from './component/sidebar/Sidebar';
 import { fetchMail } from './Store/mailSlice';
 import { Switch, Route } from 'react-router-dom';
 import { fetchSendMail } from './Store/SendMailSlice';
@@ -24,8 +20,13 @@ function App() {
 
     // ............................inbox mail...............
   useEffect(()=>{
-  dispatch(fetchMail(email))
-  console.log("fectch app")
+    // const intervalId = setInterval(()=>{
+      dispatch(fetchMail(email))
+      console.log("fectch app")
+    // },2000)
+  
+    // return () => clearInterval(intervalId)
+
   },[dispatch, email])
 
   return (

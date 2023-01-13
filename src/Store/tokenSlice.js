@@ -18,7 +18,7 @@ const tokenSlice = createSlice({
         localStorage.removeItem("email");
         },
         storeEmail(state, action){
-          const email = action.payload.replace(/[^0-9a-z]/gi)
+          const email = action.payload.replace(/[^a-z0-9]/gi,"")
           state.email = email;
           localStorage.setItem("email", email)
         }

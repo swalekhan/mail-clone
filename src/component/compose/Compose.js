@@ -2,17 +2,19 @@ import './Compose.css'
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useRef, useState } from 'react';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { composeActions } from '../../Store/composeSlice';
 import { sendMailAction } from '../../Store/SendMailSlice';
+import useHttps from '../../hooks/use-http';
 
 const Compose = () => {
     const dispatch = useDispatch()
     const email = useSelector(state => state.token.email)
-
     const [editor, setEditor] = useState("")
     const subjectRef = useRef();
     const receiverRef = useRef()
+
+    const {sendRequest: postdata } = useHttps()
 
     const onEditorStateChange = (e) => {
         setEditor(e.blocks[0].text)
@@ -21,52 +23,62 @@ const Compose = () => {
     // .............................sendemail.......................
     const submitHandler = async (e) => {
         e.preventDefault()
-        // .............along with state change
-        dispatch(sendMailAction.addSendMail({
+
+
+
+        const inputData = {
             to: receiverRef.current.value,
             subject: subjectRef.current.value,
             text: editor,
             isRead: false,
-            id: Math.random()+10,
-            date:new Date().getMilliseconds(),
-        }))
+            id: Math.random() + 10,
+            date: new Date().getMilliseconds(),
+        }
 
-        const  response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}send.json`,{
-            method:"POST",
-            body:JSON.stringify({
+        const obj = {
+            url: `https://email-box-a1f52-default-rtdb.firebaseio.com/${email}send.json`,
+            method: "POST",
+            body: inputData,
+            Headers: { "Content-Type": "application/json" },
+        }
+
+        // .......this function is calling from costom hook with arugment which is id provided by firebase when resquest goes success
+        const returnData = (data) => {
+            // .............along with state change
+            dispatch(sendMailAction.addSendMail({
                 to: receiverRef.current.value,
                 subject: subjectRef.current.value,
                 text: editor,
                 isRead: false,
-                id: Math.random()+10,
-                date:new Date().getMilliseconds(),
-            }),
-            Headers:{
-                "Content-Type":"application/json",
-            },
-        })
-        const data = await response.json()
-        console.log("inbox data",data)
+                id: data.name, // this value come from firebase 
+                date: new Date().getMilliseconds(),
+            }))
 
-// .................................inbox................................
-        const emailTo = receiverRef.current.value.replace(/[^0-9a-z]/gi)
-        const  res = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${emailTo}.json`,{
-            method:"POST",
-            body:JSON.stringify({
-                to: receiverRef.current.value,
-                subject: subjectRef.current.value,
-                text: editor,
-                isRead: false,
-                id: Math.random()+10,
-                date:new Date().getMilliseconds(),
-            }),
-            Headers:{
-                "Content-Type":"application/json",
-            },
-        })
-        const resData = await res.json()
-        console.log(resData)
-    }
+        }
+        // ... ......this function extarct custom hook which send post request.....
+        postdata(obj, returnData)
+
+        // .................................inbox................................
+        const emailTo = receiverRef.current.value.replace(/[^a-z0-9]/gi, "")
+        //    this is body part for post request
+        const inputDataForInbox = {
+            to: receiverRef.current.value,
+            subject: subjectRef.current.value,
+            text: editor,
+            isRead: false,
+            id: Math.random() + 10,
+            date: new Date().getMilliseconds(),
+        }
+
+        const objForInbox = {
+            url: `https://email-box-a1f52-default-rtdb.firebaseio.com/${emailTo}.json`,
+            method: "POST",
+            body: inputDataForInbox,
+            Headers: { "Content-Type": "application/json" },
+        }
+
+        postdata(objForInbox, returnData)
+       }
 
     return (
         <div className="compose-outer-div">

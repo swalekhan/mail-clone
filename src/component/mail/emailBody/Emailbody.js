@@ -53,7 +53,7 @@ const EmailBody = ({ to, subject, isRead, id, text,_id , date}) => {
 
         <div className='email-body-left'>
           {!isRead && <span></span>}
-          <h4>{to}</h4>
+          <h4>{subject}</h4>
         </div>
         <div className='email-body-midle'>
           <p>{text}</p>
