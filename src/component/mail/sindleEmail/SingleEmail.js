@@ -15,7 +15,7 @@ const SingleEmail = () => {
   const paras = useParams()
  
   const mails = SIBtn?sendState:mailState;
-  const findMail = mails.find((e)=> e.id === +paras.id)
+  const findMail = mails.find((e)=> e._id === paras.id)
    console.log(paras)
   return (
     <div className="single-email">
@@ -25,10 +25,10 @@ const SingleEmail = () => {
           <IconButton>
             <Avatar />
           </IconButton>
-          <h4>{findMail&&findMail.to}</h4>
+          <h4>{findMail&&findMail.subject}</h4>
         </div>
         <div className="single-email-right">
-          <p>02/05/06</p>
+          <p>{findMail && findMail.date}</p>
           <IconButton>
             <StarIcon />
           </IconButton>

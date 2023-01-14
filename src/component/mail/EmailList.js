@@ -13,8 +13,8 @@ const EmailList = () => {
   return (
     <div className='email-list'>
     <EmailSetting/>
-    {!SIBtn && mailState.map((e)=>(<EmailBody to={e.to} text ={e.text} subject ={e.subject} id ={e.id} isRead ={e.isRead} key ={Math.random()}_id = {e._id} date ={e.date}/>))}
-    {SIBtn&&sendSate.map((e)=>(<EmailBody to={e.to} text ={e.text} subject ={e.subject} id ={e.id} isRead ={true} key ={Math.random()} date ={e.date}/>))}
+    {!SIBtn && mailState.map((e)=>(<EmailBody to={e.to} text ={e.text} subject ={e.subject} isRead ={e.isRead} key ={e._id} _id = {e._id} date ={e.date}/>))}
+    {SIBtn&&sendSate.map((e)=>(<EmailBody to={e.to} text ={e.text} subject ={e.subject} isRead ={true} key ={e._id} date ={e.date} _id = {e._id}/>))}
     </div>
   )
 }

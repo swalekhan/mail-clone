@@ -10,7 +10,12 @@ const SentMailSlice = createSlice({
         },
         addSendMail(state, action) {
             state.sendState = [...state.sendState, action.payload]
+        },
+        deleteSendMail(state, action){
+            state.sendState = state.sendState.filter((e)=> e._id !== action.payload)
+            console.log(action.payload)
         }
+        
     }
 })
 
@@ -19,7 +24,7 @@ export const fetchSendMail = (email) => {
     return async (dispatch) => {
         console.log("datafetch")
         const fetchSendData = async () => {
-            const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}.json`);
+            const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}.json`); // email is not email, it is a parametr which is passed in app component, from whre this function is calling;
             const data = await response.json();
             const arr = []
             for (let key in data) {

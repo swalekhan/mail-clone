@@ -77,17 +77,16 @@
     align-items: center;
     justify-content: space-between;
 }
-.email-body-right button{
-    padding: 2px 5px;
-    border: none;
-    background-color: rgb(212, 13, 13);
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
+
+.email-body-right p{
+    font-size: 12px;
 }
-.email-body-right button:hover{
-    background-color: rgb(192, 11, 11);
+/* .email-body-right svg{
 }
+.email-body-right svg:hover{
+    opacity: 1;
+    
+} */
 
 
 

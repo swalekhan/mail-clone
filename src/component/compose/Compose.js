@@ -20,6 +20,11 @@ const Compose = () => {
         setEditor(e.blocks[0].text)
     }
 
+   
+    const time = new Date().getDate()
+    const time2 = time+"/"+new Date().getMonth()+1
+    const time3 = time2+"/"+new Date().getFullYear()
+
 
     // .............................sendemail.......................
     const submitHandler = async (e) => {
@@ -30,8 +35,7 @@ const Compose = () => {
             subject: subjectRef.current.value,
             text: editor,
             isRead: false,
-            id: Math.random() + 10,
-            date: new Date().getMilliseconds(),
+            date: time3,
         }
 
         const obj = {
@@ -49,8 +53,8 @@ const Compose = () => {
                 subject: subjectRef.current.value,
                 text: editor,
                 isRead: false,
-                id: data.name, // this value come from firebase 
-                date: new Date().getMilliseconds(),
+                _id: data.name, // this value come from firebase 
+                date: time3,
             }))
         }
         // ... ......this function extarct custom hook which send post request.....
@@ -66,8 +70,7 @@ const Compose = () => {
             subject: subjectRef.current.value,
             text: editor,
             isRead: false,
-            id: Math.random() + 10,
-            date: new Date().getMilliseconds(),
+            date: time3,
         }
 
         const objForInbox = {
@@ -76,10 +79,10 @@ const Compose = () => {
             body: inputDataForInbox,
             Headers: { "Content-Type": "application/json" },
         }
-         console.log("clicke compos")
-         const inboxReturnData =(data)=>{
-            console.log(data, " return data")
-         }
+
+        const inboxReturnData = (data) => {
+            console.log(data, " return data") //noneed of this data because we are sending data other inbox
+        }
         postdata(objForInbox, inboxReturnData) //whenevr we can call it by passing diffrent data give diffrent like normal func
     }
 

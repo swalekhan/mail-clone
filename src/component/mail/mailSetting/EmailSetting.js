@@ -1,21 +1,28 @@
 
-import CheckBoxOutlineBlankTwoToneIcon from '@material-ui/icons/CheckBoxOutlineBlankTwoTone';
+// import CheckBoxOutlineBlankTwoToneIcon from '@material-ui/icons/CheckBoxOutlineBlankTwoTone';
 import ExpandMoreTwoToneIcon from '@material-ui/icons/ExpandMoreTwoTone';
 import RefreshTwoToneIcon from '@material-ui/icons/RefreshTwoTone';
 import MoreVertTwoToneIcon from '@material-ui/icons/MoreVertTwoTone';
 import KeyboardArrowLeftTwoToneIcon from '@material-ui/icons/KeyboardArrowLeftTwoTone';
 import KeyboardArrowRightTwoToneIcon from '@material-ui/icons/KeyboardArrowRightTwoTone';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
 import './EmailSetting.css'
+import { useHistory } from 'react-router-dom';
 
 const EmailSetting = () => {
+    const history = useHistory()
 
+    const redirectToHome = () => {
+        history.push('/Home')
+    }
     return (
         <div className='emali-setting'>
             <div className='email-setting-left'>
-                <IconButton>
-                    <CheckBoxOutlineBlankTwoToneIcon />
+                <IconButton onClick={redirectToHome}>
+                    <ArrowBackIcon />
                 </IconButton>
+
                 <IconButton>
                     <ExpandMoreTwoToneIcon />
                 </IconButton>

@@ -41,12 +41,28 @@ const useHttps = () => {
         }
     }, [])
    
+        const putRequest = useCallback(async(obj) =>{
+            try{
+            const putRes = await fetch(obj.url,{
+                method:"PUT",
+                body:JSON.stringify(obj.body)
+            })
+            if(!putRes.ok){
+                throw new Error("something went wrong in put request")
+            }
+            const putData = await putRes.json();
+            console.log(putData);
+        }catch(err){
+            alert(err.message)
+        }
+        },[])
 
-     
+
     return {
         error: error,
         sendRequest: sendRequest,
         deleteRequest:deleteRequest,
+        putRequest:putRequest,
     }
 }
 
