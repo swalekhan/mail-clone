@@ -1,0 +1,17 @@
+
+.forget-form-inner-div{
+    width: 330px;
+    height: 250px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    background-color:white;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.18);
+}
+
+.spiner{
+    text-align: center;
+}

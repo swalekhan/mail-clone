@@ -6,17 +6,16 @@ const mailSlice = createSlice({
     reducers: {
         replaceMail(state, action) {
             state.mailState = action.payload ? action.payload : [];
-            console.log("mail")
         },
 
         isReadHandler(state, action) {
-            const existItemIndex = state.mailState.find((e) => e.id === action.payload)
+            const existItemIndex = state.mailState.find((e) => e._id === action.payload)
             if(existItemIndex){
                 existItemIndex.isRead = true
             }
         },
         deleteMail(state, action){
-            state.mailState = state.mailState.filter((e)=> e.id !== action.payload)
+            state.mailState = state.mailState.filter((e)=> e._id !== action.payload)
         }
     }
 })

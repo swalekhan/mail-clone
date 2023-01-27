@@ -1,31 +1,16 @@
 
-import { useDispatch} from 'react-redux'
-import { SIBtnActions } from '../../Store/send-inbox-btnSlice'
+import { Link } from 'react-router-dom'
 import './SidebarOption.css'
 
-const SidebarOption = ({ Icon, title, number }) => {
-      const dispatch = useDispatch()
-     
-
-       const sendMailHandler = () => {    
-        if (title === "Inbox") {
-            dispatch(SIBtnActions.inboxItems())
-            console.log("clicked")
-            return;
-        }
-        if (title === "Send") {
-            dispatch(SIBtnActions.sendItems())
-            return;
-        }
-    }
-
+const SidebarOption = ({ Icon, title, number, btnUrl }) => {
 
     return (
-        <div className={`sidebar-option`} onClick={sendMailHandler}>
+       <Link to={btnUrl}><div className={`sidebar-option`} > 
             <Icon />
             <h4>{title}</h4>
             <p>{number}</p>
         </div>
+        </Link> 
     )
 }
 export default SidebarOption;

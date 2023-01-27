@@ -9,6 +9,10 @@
     margin-right: 20px;
     cursor: pointer;
 }
+ a{
+    color: black;
+    text-decoration: none;
+}
 .sidebar-option:hover{
     background-color: whitesmoke;
 }
@@ -28,12 +32,3 @@
     font-size: 12px;
 }
 
-/* .sidebar-option-active{
-    background-color: rgb(235, 232, 232);
-}
-.sidebar-option-active h4,
-.sidebar-option-active p{
-    color: rgb(235, 9, 9);
-    font-size: bold;
-    opacity: 1 !important;
-} */

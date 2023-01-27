@@ -8,14 +8,13 @@ import { IconButton } from '@material-ui/core';
 import './emailBody.css'
 import { sendMailAction } from '../../../Store/SendMailSlice';
 
-const EmailBody = ({to, subject, isRead, text,_id , date}) => {
+const EmailBody = ({to, subject, isRead, text,_id , date, sendMail}) => {
   const dispatch = useDispatch()
-  const SIBtn = useSelector((state=> state.SIBtn.SIBtnState))
   const email = useSelector(state => state.token.email)
   // costum hook return object therefor we extracing like this.....
- const {deleteRequest} = useHttps()
+ const {deleteRequest,putRequest} = useHttps()
  
-  console.log(date)
+  // console.log(date)
 
   // ................delete inbox email..........................
   const deleteInboxMail = async () => {
@@ -42,20 +41,13 @@ const EmailBody = ({to, subject, isRead, text,_id , date}) => {
 // ......................updatedEmail.. ureadEmailHandler............................
   const clickHandler = async() => {
     // ..........................only when isRead === false.............................
-    if(isRead=== false){     
-    const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}/${_id}.json`,{
-      method:"PUT",
-      body:JSON.stringify({
-        to,
-        subject,
-        isRead:true,
-        _id,
-        text,
-        date,
-      })
-    })
-    const data = await response.json()
-    console.log("putdata bodyemali",data);
+    if(isRead=== false){ // we send this put Request when isRead === false.
+      const putObj = {
+        url:`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}/${_id}.json`,
+        body:{to,subject,isRead:true,_id,text,date}
+      } 
+      putRequest(putObj)    
+    
     dispatch(mailActions.isReadHandler(_id))
   }
   }
@@ -77,8 +69,8 @@ const EmailBody = ({to, subject, isRead, text,_id , date}) => {
         </div>
       </Link>
       <div className='email-body-right'>
-       {!SIBtn && <IconButton onClick={deleteInboxMail}><DeleteForeverIcon/></IconButton>}
-       {SIBtn && <IconButton onClick={deleteSendMail}><DeleteForeverIcon/></IconButton>}
+       {!sendMail &&<IconButton onClick={deleteInboxMail}><DeleteForeverIcon/></IconButton>}
+       {sendMail &&<IconButton onClick={deleteSendMail}><DeleteForeverIcon/></IconButton>}
         <p>{date}</p>
       </div>
     </div>

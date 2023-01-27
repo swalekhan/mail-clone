@@ -1,6 +1,6 @@
 import React, {useRef} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Input from '../../UI/Input/Input'
 import './Signup.css'
 import { authActions } from '../../../Store/AuthSlice'
@@ -100,7 +100,7 @@ const Signup = () => {
                         <div >
                         </div>
                         <div className='form-footer'>
-                         {authState && <a href='/ForgetPass'>Forget Password</a>}
+                         {authState && <Link to='/ForgetPass'>Forget Password</Link>}
                         </div>
                     </form>
                   {!authState ? <div>Have an account? <button onClick={loginHnadler}>Login</button></div>:
