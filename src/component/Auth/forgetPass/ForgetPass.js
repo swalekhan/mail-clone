@@ -39,6 +39,7 @@ const ForgetPass = () => {
     setSpiner(false)
     }
 
+    
     return (
         <>
         <div className="spiner">{spiner && <Spiner/>}</div>

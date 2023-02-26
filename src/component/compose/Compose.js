@@ -1,6 +1,7 @@
 import './Compose.css'
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+// import { Editor } from "react-draft-wysiwyg";
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { DefaultEditor } from 'react-simple-wysiwyg';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { composeActions } from '../../Store/composeSlice';
@@ -16,8 +17,11 @@ const Compose = () => {
 
     const { sendRequest: postdata } = useHttps()  // custom hook
 
-    const onEditorStateChange = (e) => {
-        setEditor(e.blocks[0].text)
+    // const onEditorStateChange = (e) => {
+    //     setEditor(e.blocks[0].text)
+    // }
+    const onChange = (e) => {
+        setEditor(e.target.value)
     }
 
     // .............................sendemail.......................
@@ -90,20 +94,14 @@ const Compose = () => {
                     </div>
                     <div className="compose-main">
                         <div className="compose-group">
-                            <input placeholder='To' onChange={(e) => setTo(e.target.value)} value = {to} />
+                            <input type="email" placeholder='To' onChange={(e) => setTo(e.target.value)} value = {to} />
                         </div>
                         <div className="compose-group">
                             <input placeholder='subject' onChange={(e) => setSubject(e.target.value)} value ={subject} />
                         </div>
                         <div className="compose-group editor">
-                            <Editor
-                                editorState={editor}
-                                toolbarClassName="toolbarClassName"
-                                wrapperClassName="wrapperClassName"
-                                editorClassName="editorClassName"
-                                // onEditorStateChange={onEditorStateChange}
-                                onChange={onEditorStateChange}
-                            />
+                           
+                            <DefaultEditor value={editor} onChange={onChange} />
                         </div>
                     </div>
                     <div className='compose-footer'>

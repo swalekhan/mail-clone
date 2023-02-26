@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 
 
 const SingleEmail = () => {
-  // const SIBtn = useSelector(state => state.SIBtn.SIBtnState)
   const mailState = useSelector(state=> state.mail.mailState)
   const sendState = useSelector(state => state.send.sendState)
   const paras = useParams()

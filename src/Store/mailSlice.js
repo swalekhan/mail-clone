@@ -23,7 +23,6 @@ const mailSlice = createSlice({
 
 export const fetchMail = (email) => {
     return async (dispatch) => {
-        console.log("datafetch")
         const fetchData = async () => {
             const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}.json`);
             const data = await response.json();
@@ -39,7 +38,7 @@ export const fetchMail = (email) => {
                     date:data[key].date
                 })
             }
-            console.log("mail", arr)
+            // console.log("mail", arr)
             return arr;
         }
         try {
