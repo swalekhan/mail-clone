@@ -4,7 +4,7 @@ import { useCallback, useState } from "react"
 const useHttps = () => {
     const [error, setError] = useState("")
 
-    const sendRequest = useCallback(async (obj, returnData) => {
+    const sendRequest = useCallback(async (obj) => {
         try {
             const response = await fetch(obj.url, {
                 method: "POST",
@@ -14,13 +14,28 @@ const useHttps = () => {
             if (!response.ok) {
                 throw new Error("something went wrong");
             }
-            const data = await response.json();
-
             //       ..........this function is calling from here by assingnig data in argument which will exist in component..............
-            returnData(data);
+            return await response.json();
         } catch (err) {
-            alert(err.message,"send")
             setError(err.message)
+        }
+    }, [])
+
+    const fetchData = useCallback(async (obj) => {
+        try {
+            setError(true)
+            const response = await fetch(obj)
+            if (!response.ok) {
+                throw new Error("something went wrong");
+            }
+            //       ..........this function is calling from here by assingnig data in argument which will exist in component..............
+            const data = await response.json();
+            setError(false)
+            return data
+
+        } catch (err) {
+            setError(err.message)
+            setError(false)
         }
     }, [])
 
@@ -35,9 +50,9 @@ const useHttps = () => {
                 throw new Error("something went wrong");
             }
             const data = await response.json();
-            console.log(data)
+            console.log(data, "delete")
         } catch (err) {
-            alert(err.message,"delete")
+            alert(err.message, "delete")
         }
     }, [])
 
@@ -54,16 +69,17 @@ const useHttps = () => {
             const putData = await putRes.json();
             console.log(putData);
         } catch (err) {
-            alert(err.message,"put")
+            alert(err.message, "put")
         }
     }, [])
 
 
     return {
-        error: error,
-        sendRequest: sendRequest,
-        deleteRequest: deleteRequest,
-        putRequest: putRequest,
+        error,
+        sendRequest,
+        deleteRequest,
+        putRequest,
+        fetchData,
     }
 }
 

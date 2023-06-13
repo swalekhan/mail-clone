@@ -14,7 +14,7 @@ const EmailSetting = () => {
     const history = useHistory()
 
     const redirectToHome = () => {
-        history.push('/Home')
+        history.push('/inbox')
     }
     return (
         <div className='emali-setting'>

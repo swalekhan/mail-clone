@@ -52,7 +52,7 @@ const Signup = () => {
  
        dispatch((tokenActions.addToken(data.idToken)));//store token
        dispatch(tokenActions.storeEmail(data.email))
-       console.log(data)
+    //    console.log(data)
         history.replace('/Home')
     } catch(err){
         console.log(err)

@@ -5,81 +5,48 @@ import { DefaultEditor } from 'react-simple-wysiwyg';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { composeActions } from '../../Store/composeSlice';
-import { sendMailAction } from '../../Store/SendMailSlice';
+// import { sendMailAction } from '../../Store/SendMailSlice';
 import useHttps from '../../hooks/use-http';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Compose = () => {
-    const dispatch = useDispatch()
     const email = useSelector(state => state.token.email) // email when we loged in store in localstorege
-    const [editor, setEditor] = useState("")
-    const [to, setTo] = useState("");
-    const [subject, setSubject] = useState("")
+    const [input, setInput] = useState({ to: "", editor: "", subject: "", isRead: true, date: "" })
+    const router = useHistory()
+    const dispatch = useDispatch()
 
     const { sendRequest: postdata } = useHttps()  // custom hook
 
-    // const onEditorStateChange = (e) => {
-    //     setEditor(e.blocks[0].text)
-    // }
-    const onChange = (e) => {
-        setEditor(e.target.value)
+    const onChangeHandler = (e) => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value,
+        })
     }
 
-    // .............................sendemail.......................
+    // .............................submitHandler.......................
     const submitHandler = (e) => {
         e.preventDefault()
         const time = new Date().getDate()
         const time2 = time + "/" + new Date().getMonth() + 1
         const time3 = time2 + "/" + new Date().getFullYear()
 
-
-        // .......alert....
-        if(to.trim().length === 0){
-            alert("fill input field");
-            return
-        }
-        const inputData = { // 
-            to: to,
-            subject: subject,
-            text: editor,
-            isRead: false,
-            date: time3,
-        }
-
-        const obj = {
+        // ................................send......................................
+        postdata({
             url: `https://email-box-a1f52-default-rtdb.firebaseio.com/${email}send.json`,  //sending requst on ${email}send(email and some string)url in send component we will fetch from this url
-            body: inputData,
-        }
-
-        // .......this function is being called from costom hook with arugment which is id provided by firebase when resquest goes success
-        const returnData = (data) => {
-            // .............along with state change
-            dispatch(sendMailAction.addSendMail({
-                ...inputData,
-                _id: data.name, // this value come from firebase 
-            }))
-        }
-        // ... ......this function extarct custom hook which send post request.....
-        postdata(obj, returnData)//this is a function which is present in costum hook, we are calling it from here;
-
+            body: { ...input, isRead: false, data: time3 },
+        })
 
         // .................................inbox................................
-        const emailTo = to.replace(/[^a-z0-9]/gi, "")
-        //    this is body part for post request
-        const objForInbox = {
+        const emailTo = input.to.replace(/[^a-z0-9]/gi, "")
+        postdata({
             url: `https://email-box-a1f52-default-rtdb.firebaseio.com/${emailTo}.json`,  //pushing data on user email use get data from fire base and get this in inbox coponent or when hit inbox keyword find this data
-            body: inputData,
-        }
-
-        const inboxReturnData = (data) => {
-            // console.log(data, " return data") //noneed of this data because we are sending data other inbox
-        }
-        postdata(objForInbox, inboxReturnData) //whenever we call it by passing diffrent data {argument}it gives diffrent data like normal func. this is a function which is present in costum hook
+            body: { ...input, date: time3 },
+        })
 
         // ..............after sending mail turn of
-        setTo("");
-        setSubject("");
-        setEditor("")
         dispatch(composeActions.hideCompose())
+        router.push("/inbox")
     }
 
     return (
@@ -94,14 +61,13 @@ const Compose = () => {
                     </div>
                     <div className="compose-main">
                         <div className="compose-group">
-                            <input type="email" placeholder='To' onChange={(e) => setTo(e.target.value)} value = {to} />
+                            <input type="email" placeholder='To' name='to' onChange={onChangeHandler} value={input.to} />
                         </div>
                         <div className="compose-group">
-                            <input placeholder='subject' onChange={(e) => setSubject(e.target.value)} value ={subject} />
+                            <input placeholder='subject' name='subject' onChange={onChangeHandler} value={input.subject} />
                         </div>
                         <div className="compose-group editor">
-                           
-                            <DefaultEditor value={editor} onChange={onChange} />
+                            <DefaultEditor value={input.editor} onChange={onChangeHandler} name='editor' />
                         </div>
                     </div>
                     <div className='compose-footer'>

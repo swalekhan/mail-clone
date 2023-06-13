@@ -12,7 +12,6 @@ const AuthSlice = createSlice({
         logout(state){
         state.authState = false;
         }
-
     }
     
 })
