@@ -102,7 +102,7 @@ const Signup = () => {
                          {signIn && <Link to='/Auth/ForgetPassword'>Forget Password</Link>}
                         </div>
                     </form>
-                  {!signIn ? <div>Have an account? <button onClick={loginHnadler}>Login</button></div>:
+                  {!signIn ? <div>Have an account? <button className='login_signup' onClick={loginHnadler}>Login</button></div>:
                  <div style={{marginTop:"15px",}}>don't have account? <button onClick={()=>dispatch(setSignIn(false))}>Signup</button></div>}
                 </div>
             </div>

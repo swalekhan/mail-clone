@@ -29,12 +29,6 @@
     margin: 1rem;
 }
 
-/* .form-group{ */
-    /* margin: 0.8rem; */
-    /* border: 2px solid red; */
-
-/* } */
-
 .form-group label{
     display: block;
     /* margin-left: 0.2rem; */
@@ -72,4 +66,10 @@
 
 .form-footer{
     text-align: center;
+}
+
+.login_signup{
+    background-color: transparent;
+    border: 0;
+    outline: 0;
 }
