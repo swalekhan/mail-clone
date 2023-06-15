@@ -7,6 +7,10 @@
     align-items: center;
     height: 50px;
     border-bottom: 1px solid whitesmoke;
+    position: sticky;
+    top: 0;
+    z-index: 9;
+    background-color: #fff;
 }
 .header-left{
     display: flex;

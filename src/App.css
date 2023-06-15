@@ -1,4 +1,95 @@
-.app-side-body{
+.app-side-body {
   display: grid;
   grid-template-columns: 250px auto;
+  transition: all .3s ease;
+}
+
+.email-body-left h4 {
+  font-size: 13px !important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 200px
+}
+
+.no_mail_availble{
+  flex: 1;
+  text-align: center;
+  margin-top: 50px;
+  color: #777;
+}
+
+@media (max-width:650px) {
+  .header {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .header-left span {
+    font-size: 0px !important;
+  }
+
+  .search-mail {
+    height: 40px;
+  }
+
+  .header-logout {
+    text-align: end;
+  }
+
+  .header-logout button {
+    margin: 0px !important;
+    font-size: 10px;
+  }
+
+  .email-body-left h4 {
+    font-size: 13px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 130px
+  }
+
+  .email-body-midle p {
+    font-size: 12px;
+    max-width: 75px !important;
+
+  }
+
+  .app-side-body {
+    grid-template-columns: 1fr;
+    justify-content: center;
+  }
+}
+
+@media (max-width:400px) {
+  .search-mail {
+    height: 40px;
+    width: 200px;
+  }
+  .email-list {
+    width: 100vw;
+    height: 100vh !important;
+}
+  .header-logout button {
+    margin: 0px !important;
+    font-size: 10px;
+    padding: 12px !important;
+    border: 0px;
+    border-radius: 10px;
+  }
+
+  .email-body-right p {
+    font-size: 10px !important;
+  }
+}
+
+@media (min-width:652px) {
+  .sidebar_top div {
+    display: none;
+  }
+
+  .header .header-left svg {
+    display: none;
+  }
+
 }

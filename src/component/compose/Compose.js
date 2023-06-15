@@ -1,13 +1,11 @@
 import './Compose.css'
-// import { Editor } from "react-draft-wysiwyg";
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { DefaultEditor } from 'react-simple-wysiwyg';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { composeActions } from '../../Store/composeSlice';
-// import { sendMailAction } from '../../Store/SendMailSlice';
 import useHttps from '../../hooks/use-http';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { postSendMailAsync } from '../SendMail/SendMailSlice';
 
 const Compose = () => {
     const email = useSelector(state => state.token.email) // email when we loged in store in localstorege
@@ -32,11 +30,8 @@ const Compose = () => {
         const time3 = time2 + "/" + new Date().getFullYear()
 
         // ................................send......................................
-        postdata({
-            url: `https://email-box-a1f52-default-rtdb.firebaseio.com/${email}send.json`,  //sending requst on ${email}send(email and some string)url in send component we will fetch from this url
-            body: { ...input, isRead: false, data: time3 },
-        })
-
+        dispatch(postSendMailAsync({email, data:{ ...input, isRead: false, date: time3, }}))
+        
         // .................................inbox................................
         const emailTo = input.to.replace(/[^a-z0-9]/gi, "")
         postdata({

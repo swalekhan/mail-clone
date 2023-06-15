@@ -12,6 +12,8 @@ export const deleteInboxMail = async ({ email, id }) => {
         console.log(err)
     }
 }
+
+
 export const fetchInboxMail = async (email) => {
     const response = await fetch(`https://email-box-a1f52-default-rtdb.firebaseio.com/${email}.json`);
     const data = await response.json();
@@ -19,7 +21,7 @@ export const fetchInboxMail = async (email) => {
     for (let key in data) {
         arr.push({
             id: key,
-            text: data[key].text,
+            editor: data[key].editor,
             to: data[key].to,
             subject: data[key].subject,
             isRead: data[key].isRead,
@@ -28,6 +30,7 @@ export const fetchInboxMail = async (email) => {
     }
     return arr;
 }
+
 
 export const updateInboxMail = async ({ email, id }) => {
     try {

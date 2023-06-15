@@ -2,16 +2,14 @@
 import ReorderIcon from '@material-ui/icons/Reorder';
 import SearchIcon from '@material-ui/icons/Search';
 import { IconButton } from '@material-ui/core';
-
 import './Header.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { tokenActions } from '../../Store/tokenSlice';
 import { useHistory } from 'react-router-dom';
-import { searchActions } from '../../Store/searchSlice';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect} from 'react';
 
 const Header = () => {
-    const [search, setSearch] = useState("")
+    const isLogin = useSelector(state => state.token.email)
     const history = useHistory()
     const dispatch = useDispatch()
 
@@ -20,40 +18,62 @@ const Header = () => {
         history.push("/")
     }
 
-    const searchHandler = (e) => {
-        setSearch(e.target.value)
+    // ..........................open sidebar....................
+    const sidebarHandler = () => {
+        const sidebar = document.getElementById("sidebar");
+        const page = document.getElementById("pages")
+        page.style.display = "none"
+        sidebar.style.display = "flex"
     }
 
+
+    // // .........................when screen width trun more than 650px both sidebar and pages will visible
+
+    const changeSizeHandler = useCallback(() => {
+        const width = document.body.offsetWidth
+        if (width > 650) {
+            const sidebar = document.getElementById("sidebar");
+            const page = document.getElementById("pages")
+            if(sidebar && page){
+            page.style.display = "block"
+            sidebar.style.display = "flex"
+            }
+        }
+    }, [])
+
     useEffect(() => {
-        const id = setTimeout(() => {
-            dispatch(searchActions.isSearch(search))
-        }, 700)
+        window.addEventListener("resize", changeSizeHandler)
 
         return () => {
-            clearTimeout(id)
+            window.removeEventListener("resize", changeSizeHandler)
         }
-
-    }, [search, dispatch])
+    }, [changeSizeHandler])
 
     return (
         <div className="header">
             <div className="header-left">
-                <IconButton>
+                <IconButton onClick={sidebarHandler}>
                     <ReorderIcon />
                 </IconButton>
                 <span>Mail Box</span>
             </div>
-            <div className='header-midle'>
-                <div className='search-mail'>
-                    <IconButton>
-                        <SearchIcon />
-                    </IconButton>
-                    <input type="text" placeholder='search' onChange={searchHandler} />
-                </div>
-            </div>
-            <div className='header-logout'>
-                <button onClick={logoutHandler}>Logout</button>
-            </div>
+
+            {isLogin &&
+                <>
+                    <div className='header-midle'>
+                        <div className='search-mail'>
+                            <IconButton>
+                                <SearchIcon />
+                            </IconButton>
+                            <input type="text" placeholder='search' />
+                        </div>
+                    </div>
+
+                    <div className='header-logout'>
+                        <button onClick={logoutHandler}>Logout</button>
+                    </div>
+                </>
+            }
 
         </div>
     )

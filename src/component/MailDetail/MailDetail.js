@@ -4,7 +4,6 @@ import StarIcon from '@material-ui/icons/Star';
 import './MailDetail.css'
 
 const MailDetail = ({ item }) => {
-
     return (
         <div className="single-email">
             <EmailSetting />
@@ -23,7 +22,7 @@ const MailDetail = ({ item }) => {
                 </div>
             </div>
             <div className="single-email-text">
-                <p>{item?.text}</p>
+                <p>{item?.editor}</p>
             </div>
         </div>
     )

@@ -6,19 +6,43 @@ import LabelIcon from '@material-ui/icons/Label';
 import ExpandMoreTwoToneIcon from '@material-ui/icons/ExpandMoreTwoTone';
 import { useDispatch, useSelector } from 'react-redux';
 import { composeActions } from '../../../Store/composeSlice';
-const Sidebar = () =>{
-      const dispatch = useDispatch()
-      const mail = useSelector(state=> state.inbox.inboxMail)
-      const unreadMail = mail.filter((e)=> e.isRead === true);
+
+const Sidebar = () => {
+    const mail = useSelector(state => state.inbox.inboxMail);
+    const isLogin = useSelector(state => state.token.email);
+    const unreadMail = mail.filter((e) => e.isRead === true);
+    const dispatch = useDispatch();
+
+
+    const sidebarcloseHandler = () => {
+        const size = document.body.offsetWidth
+        // ....................on small screen this onclick func will work..
+        if (size <= 650) {
+            const sidebar = document.getElementById("sidebar");
+            const page = document.getElementById("pages")
+            page.style.display = "flex"
+            sidebar.style.display = "none"
+        }
+    }
+
+
 
     return (
-        <div className="sidebar">
-         <button className='compose-btn' onClick={()=>dispatch(composeActions.showCompose())}><span>+</span>Compose</button>
-        <SidebarOption Icon ={InboxIcon} title ="Inbox" number={unreadMail.length} btnUrl ={'/inbox'} />
-        <SidebarOption Icon ={LabelIcon} title ="Category" btnUrl ={'/inbox'}/>
-        <SidebarOption Icon ={SendIcon} title ="Send" btnUrl ={'/send'} />
-        <SidebarOption Icon ={ExpandMoreTwoToneIcon} title ="More" btnUrl ={'/inbox'} />
-        </div>
+        <>
+
+            {isLogin &&
+                <div className="sidebar" id='sidebar'>
+                    <div className='sidebar_top'>
+                        <button className='compose-btn' onClick={() => dispatch(composeActions.showCompose())}><span>+</span>Compose</button>
+                        <div onClick={sidebarcloseHandler}>X</div>
+                    </div>
+
+                    <SidebarOption sidebarcloseHandler={sidebarcloseHandler} Icon={InboxIcon} title="Inbox" number={unreadMail.length} btnUrl={'/inbox'} />
+                    <SidebarOption sidebarcloseHandler={sidebarcloseHandler} Icon={LabelIcon} title="Category" btnUrl={'/inbox'} />
+                    <SidebarOption sidebarcloseHandler={sidebarcloseHandler} Icon={SendIcon} title="Send" btnUrl={'/send'} />
+                    <SidebarOption sidebarcloseHandler={sidebarcloseHandler} Icon={ExpandMoreTwoToneIcon} title="More" btnUrl={'/inbox'} />
+                </div>}
+        </>
     )
 }
 export default Sidebar

@@ -13,7 +13,8 @@ const tokenSlice = createSlice({
           localStorage.setItem("token",action.payload)
         },
         removeToken(state, action){
-        state.token = action.payload;
+        state.token = null;
+        state.email = null;
         localStorage.removeItem("token");
         localStorage.removeItem("email");
         },

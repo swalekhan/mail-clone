@@ -1,13 +1,12 @@
-import React, {useRef} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, {useRef, useState} from 'react'
+import { useDispatch} from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import Input from '../../UI/Input/Input'
 import './Signup.css'
-import { authActions } from '../../../Store/AuthSlice'
 import { tokenActions } from '../../../Store/tokenSlice'
 
 const Signup = () => {
-    const authState = useSelector(state => state.auth.authState)
+    const [signIn, setSignIn] = useState(false)
     const dispatch = useDispatch()
 
     const emailRef = useRef()
@@ -19,14 +18,14 @@ const Signup = () => {
     const submitHandler = async(e)=>{
         e.preventDefault();
 
-         let confirmPss = authState?passworRef.current.value:confirmPassRef.current.value;
+         let confirmPss = signIn?passworRef.current.value:confirmPassRef.current.value;
         if(passworRef.current.value !== confirmPss){
             alert("pass should be same")
             return null;
         }
 
         let url;
-        if(authState){
+        if(signIn){
          url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDZDBnoYIsQENtLozpfIyn-81Z8_zwjHRc'
         }else{
         url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDZDBnoYIsQENtLozpfIyn-81Z8_zwjHRc';
@@ -53,7 +52,7 @@ const Signup = () => {
        dispatch((tokenActions.addToken(data.idToken)));//store token
        dispatch(tokenActions.storeEmail(data.email))
     //    console.log(data)
-        history.replace('/Home')
+        history.replace('/inbox')
     } catch(err){
         console.log(err)
     }
@@ -61,7 +60,7 @@ const Signup = () => {
 
     // ....................turn login state true........................
     const loginHnadler = () => {
-       dispatch(authActions.login())
+       setSignIn(true)
     }
 
     return (
@@ -70,7 +69,7 @@ const Signup = () => {
                 <div className='form-inner-div'>
                     <form onSubmit={submitHandler}>
                         <div className='form-header'>
-                            <h2>{!authState?"Signup":"Login"}</h2>
+                            <h2>{!signIn?"Signup":"Login"}</h2>
                         </div>
                         <div className='form-main'>
                         <div className='form-group'>
@@ -82,29 +81,29 @@ const Signup = () => {
                         </div>
                         <div className='form-group'>
                             <Input label="Password" ref = {passworRef} input={{
-                                type: "password",
+                                type: "new-password",
                                 id: "password",
                                 required: "required"
                             }} />
                         </div>
-                        {!authState&&<div className='form-group'>
+                        {!signIn&&<div className='form-group'>
                             <Input label="Confirm Password" ref = {confirmPassRef}  input={{
-                                type: "password",
+                                type: "new-password",
                                 id: "confirm",
                                 required: "required"
                             }} />
                         </div>}
 
-                              <button type='submit'> {!authState? "sign Up":"Login"}</button>
+                              <button type='submit'> {!signIn? "sign Up":"Login"}</button>
                         </div>
                         <div >
                         </div>
                         <div className='form-footer'>
-                         {authState && <Link to='/ForgetPass'>Forget Password</Link>}
+                         {signIn && <Link to='/Auth/ForgetPassword'>Forget Password</Link>}
                         </div>
                     </form>
-                  {!authState ? <div>Have an account? <button onClick={loginHnadler}>Login</button></div>:
-                 <div style={{marginTop:"15px",}}>don't have account? <button onClick={()=>dispatch(authActions.logout())}>Signup</button></div>}
+                  {!signIn ? <div>Have an account? <button onClick={loginHnadler}>Login</button></div>:
+                 <div style={{marginTop:"15px",}}>don't have account? <button onClick={()=>dispatch(setSignIn(false))}>Signup</button></div>}
                 </div>
             </div>
         </>

@@ -1,6 +1,7 @@
 .single-email{
     box-shadow: 0px 0px 3px #aaa;
-    height: 200%;
+    height: 100%;
+    overflow: auto;
 }
 .sinle-email-header{
     display: flex;
@@ -26,5 +27,18 @@
 }
 .single-email-text{
     display: flex;
-    padding: 10px;
+    padding: 20px;
+}
+
+@media(max-width:650px){
+    .single-email{
+     width: 100vw;
+     height: 100vh;
+    }
+    .single-email-right p {
+        font-size: 10px;
+    }
+    .single-email-left h4{
+      font-size: 14px;
+    }
 }

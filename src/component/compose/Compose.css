@@ -1,6 +1,4 @@
-
-.compose-outer-div{
-    position: relative;
+.compose-outer-div {
     position: fixed;
     bottom: 5%;
     left: 20%;
@@ -10,47 +8,52 @@
     border: 1px solid whitesmoke;
     z-index: 99;
 }
-.compose-inner-div{
+
+.compose-inner-div {
     width: 100%;
     height: 100%;
     box-shadow: 2px 2px 1px 0px #aaa;
     overflow: auto;
     background-color: white;
 }
-.compose-top{
+
+.compose-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.compose-top button{
+
+.compose-top button {
     border: none;
     padding: 10px 12px;
     cursor: pointer;
 }
-.compose-top button:hover{
+
+.compose-top button:hover {
     background-color: rgb(199, 39, 39);
 }
-.compose-header{
+
+.compose-header {
     background-color: azure;
     box-shadow: 0px 1px 1px 0px #aaa;
     padding: 5px;
 }
 
-.compose-group input{
-  width: 100%;
-  border: none;
-  padding: 10px 0px;
-  border-bottom: 1px solid grey;
+.compose-group input {
+    width: 100%;
+    border: none;
+    padding: 10px 0px;
+    border-bottom: 1px solid grey;
 }
 
-.compose-footer button{
-   position:absolute;
-   bottom: 5%;
-   right: 5%;
-   z-index: 99;
+.compose-footer button {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    z-index: 99;
 }
 
-.btn{
+.btn {
     display: inline-block;
     border: none;
     padding: 10px 20px;
@@ -58,13 +61,25 @@
     border-radius: 10px;
     cursor: pointer;
 }
-.btn-primary{
+
+.btn-primary {
     background: rgb(48, 186, 245);
     color: white;
 }
 
-.editor{
+.editor {
     height: 20%;
-    overflow:auto;
+    overflow: auto;
     /* border: 1px solid red; */
+}
+
+
+@media(max-width:650px) {
+    .compose-outer-div {
+        padding: 0px;
+        bottom: 0%;
+        left: 0%;
+        width: 100vw;
+        height: 100vh;
+    }
 }

@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import EmailBody from "../mail/emailBody/Emailbody";
 import EmailSetting from "../mail/mailSetting/EmailSetting";
-import { useEffect } from "react";
 import '../mail/emailList.css'
-import { fetchInboxMailAsync, deleteInboxMailAsync, updateInboxMailAsync } from "./InboxMailSlice";
+import { deleteInboxMailAsync, updateInboxMailAsync } from "./InboxMailSlice";
 
 const InboxMail = () => {
     const inboxMails = useSelector(state => state.inbox);
@@ -20,15 +19,10 @@ const InboxMail = () => {
     }
 
     // ...............fecth inbox_mail.............................
-    useEffect(() => {
-        const id = setInterval(() => {
-            dispatch(fetchInboxMailAsync(email))
-        }, 1000)
 
-        return () => {
-            clearInterval(id)
-        }
-    }, [dispatch, email])
+    if (inboxMails.inboxMail.length < 1) {
+        return (<div className="no_mail_availble"><h2 >No mail available</h2> </div>)
+    }
 
     return (
         <div className='email-list'>

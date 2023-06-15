@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { deleteSendMail, fetchSendMail } from "./SendMailApi";
+import { deleteSendMail, fetchSendMail, postSendMail } from "./SendMailApi";
 
 
 
@@ -13,10 +13,18 @@ export const deleteSendMailAsync = createAsyncThunk(
 
 export const fetchSendMailAsync = createAsyncThunk(
     "send/fetch",
-    async(email) => {
-    const response = await fetchSendMail(email)
+    async(data) => {
+    const response = await fetchSendMail(data)
     return response
     }
+)
+
+export const postSendMailAsync = createAsyncThunk(
+  "send/post",
+  async(data) => {
+  const response = await postSendMail(data)
+  return response
+  }
 )
 
 const SendMailSlice = createSlice({
@@ -45,6 +53,13 @@ const SendMailSlice = createSlice({
           .addCase(fetchSendMailAsync.fulfilled, (state, action) => {
             state.status = 'succeeded'
             state.sendMail = action.payload
+          })
+          .addCase(postSendMailAsync.pending, (state, action) => {
+            state.status = 'loading'   
+        })
+          .addCase(postSendMailAsync.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.sendMail.push(action.payload)
           })
         
       }

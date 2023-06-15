@@ -2,6 +2,18 @@
 .sidebar{
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+.sidebar_top{
+    display: flex;
+    justify-content: space-between;
+}
+.sidebar_top div{
+    margin:20px 30px 0px 0px;
+    font-weight: 400;
+    font-size: 30px;
+    cursor: pointer;
 }
 .compose-btn{
     border-radius: 40px;
@@ -16,3 +28,4 @@
    font-size: large;
    padding: 0px 2px;
 }
+
