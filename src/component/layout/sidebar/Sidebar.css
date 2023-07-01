@@ -23,6 +23,7 @@
     max-width: 150px;
     border: none;
     font-size: large;
+    cursor: pointer;
 }
 .compose-btn span{
    font-size: large;

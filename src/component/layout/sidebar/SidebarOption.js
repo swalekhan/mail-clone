@@ -1,16 +1,22 @@
-
-import { Link } from 'react-router-dom'
 import './SidebarOption.css'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 const SidebarOption = ({ Icon, title, number, btnUrl, sidebarcloseHandler }) => {
+    const history = useHistory()
+
+    const clickHandler = () => {
+        if (btnUrl) {
+            history.push(btnUrl)
+        }
+        sidebarcloseHandler()
+    }
 
     return (
-       <Link to={btnUrl}><div className={`sidebar-option`} onClick={()=> sidebarcloseHandler()} > 
+        <div className={`sidebar-option ${btnUrl && "Valid"}`} onClick={clickHandler} >
             <Icon />
             <h4>{title}</h4>
             <p>{number}</p>
         </div>
-        </Link> 
     )
 }
 export default SidebarOption;
