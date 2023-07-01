@@ -103,7 +103,7 @@ const Signup = () => {
                         </div>
                     </form>
                   {!signIn ? <div>Have an account? <button className='login_signup' onClick={loginHnadler}>Login</button></div>:
-                 <div style={{marginTop:"15px",}}>don't have account? <button onClick={()=>dispatch(setSignIn(false))}>Signup</button></div>}
+                 <div style={{marginTop:"15px",}}>don't have account? <button className='login_signup' onClick={()=>dispatch(setSignIn(false))}>Signup</button></div>}
                 </div>
             </div>
         </>

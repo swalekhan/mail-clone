@@ -91,5 +91,7 @@
   .header .header-left svg {
     display: none;
   }
-
+  .header-left h2{
+    font-size: 0px;
+  }
 }

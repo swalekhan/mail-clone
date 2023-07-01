@@ -50,7 +50,7 @@ function App() {
         <div className='route_pages' id='pages'>
           <Switch>
             <Route path='/' exact>
-              <SignUpIn />
+             {!email?<SignUpIn />:<Inbox />}
             </Route>
             <Route path="/Auth/ForgetPassword" exact>
               <ForgetPass />

@@ -6,7 +6,7 @@ import './Header.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { tokenActions } from '../../Store/tokenSlice';
 import { useHistory } from 'react-router-dom';
-import { useCallback, useEffect} from 'react';
+import { useCallback, useEffect } from 'react';
 
 const Header = () => {
     const isLogin = useSelector(state => state.token.email)
@@ -34,9 +34,9 @@ const Header = () => {
         if (width > 650) {
             const sidebar = document.getElementById("sidebar");
             const page = document.getElementById("pages")
-            if(sidebar && page){
-            page.style.display = "block"
-            sidebar.style.display = "flex"
+            if (sidebar && page) {
+                page.style.display = "block"
+                sidebar.style.display = "flex"
             }
         }
     }, [])
@@ -52,9 +52,11 @@ const Header = () => {
     return (
         <div className="header">
             <div className="header-left">
-                <IconButton onClick={sidebarHandler}>
+              { isLogin? <IconButton onClick={sidebarHandler}>
                     <ReorderIcon />
-                </IconButton>
+                </IconButton>:
+                <h2>Mail Box</h2>
+                }
                 <span>Mail Box</span>
             </div>
 

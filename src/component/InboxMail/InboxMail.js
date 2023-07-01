@@ -18,8 +18,6 @@ const InboxMail = () => {
         dispatch(updateInboxMailAsync({ email, id }))
     }
 
-    // ...............fecth inbox_mail.............................
-
     if (inboxMails.inboxMail.length < 1) {
         return (<div className="no_mail_availble"><h2 >No mail available</h2> </div>)
     }

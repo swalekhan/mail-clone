@@ -41,7 +41,7 @@ const SendMailSlice = createSlice({
     extraReducers(builder) {
         builder
           .addCase(deleteSendMailAsync.pending, (state, action) => {
-            state.status = 'loading'
+            state.status = 'succeeded'
           })
           .addCase(deleteSendMailAsync.fulfilled, (state, action) => {
             state.status = 'succeeded'
